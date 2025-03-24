@@ -6,11 +6,13 @@ pipeline{
     stages{
         stage('pull src'){
             steps{
-                
+                git branch: 'main', url: 'https://github.com/maheshgowdamg/kubernetes-project.git' 
             }
         }
         stage('build'){
-            sh 'mvn clean package'
+            steps{
+                sh 'mvn clean package'
+            }
         }
         stage('remove conatiner'){
             steps{
