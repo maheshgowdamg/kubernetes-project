@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: deploy
-          image: dockerhub image(maheshgowdamg25/web; latest)
+          image: maheshgowdamg25/kube:latest
           ports:
             - containerPort: 8080
 
