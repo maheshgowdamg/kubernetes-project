@@ -1,5 +1,9 @@
 pipeline {
-    agent { label 'k8s-pod' } 
+    agent {
+     kubernetes {
+            label 'k8s-pod' 
+     }
+    }
 
     environment {
         KUBECONFIG = credentials('kubeconfig')  
