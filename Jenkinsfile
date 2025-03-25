@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     // Kubernetes plugin configuration
-                    kubernetesDeploy(configs: 'deploy.yml', kubeconfigId: 'kubeconfig')
+                    kubernetesDeploy(configs: 'deploy.yml', kubeconfigId: 'kube-config')
                 }
             }
         }
