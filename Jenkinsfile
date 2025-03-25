@@ -1,16 +1,25 @@
 pipeline {
-    agent any
+    agent { label 'k8s-pod' } 
+
+    environment {
+        KUBECONFIG = credentials('kubeconfig')  
+    }
+
     stages {
-        stage('Pull Source') {
-            steps {
-                git branch: 'main', url: 'https://github.com/maheshgowdamg/kubernetes-project.git'
-            }
-        }
-        stage('Build and Deploy') {
+        stage('Checkout Code') {
             steps {
                 script {
-                    // Kubernetes plugin configuration
-                    kubernetesDeploy(configs: 'deploy.yml', kubeconfigId: 'kube-config')
+                   
+                    git branch: 'main', url: 'https://github.com/maheshgowdamg/kubernetes-project.git'
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    
+                    sh 'kubectl apply -f deploy.yml'
                 }
             }
         }
