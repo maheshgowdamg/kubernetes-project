@@ -4,7 +4,7 @@ pipeline {
     environment {
         GIT_REPO = 'https://github.com/maheshgowdamg/kubernetes-project.git'
         YAML_FILE = 'deploy.yml'
-        K8S_CREDENTIALS = 'kube' // Jenkins credential ID for kubeconfig
+        K8S_CREDENTIALS = 'k8s-config' // Jenkins credential ID for kubeconfig
         KUBECONFIG = '/var/lib/jenkins/.kube/config' // Use Jenkins home directory
     }
     stages {
