@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     kubernetesCli(
-                        kubeconfigId: 'kubeconfig-jenkins',
+                        kubeconfigId: 'kube',
                         script: '''
                         kubectl apply -f deploy.yml
                         kubectl get pods
