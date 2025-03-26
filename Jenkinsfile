@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        KUBECONFIG = credentials('kube')  // Use Jenkins credential ID
-    }
-
     stages {
         stage('Checkout Code') {
             steps {
@@ -14,14 +10,11 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                script {
-                    kubernetesCli(
-                        kubeconfigId: 'kube',
-                        script: '''
+                withKubeConfig([credentialsId: 'kube']) {
+                    sh '''
                         kubectl apply -f deploy.yml
                         kubectl get pods
-                        '''
-                    )
+                    '''
                 }
             }
         }
