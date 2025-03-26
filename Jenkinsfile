@@ -1,29 +1,27 @@
 pipeline {
-    agent {
-     kubernetes {
-            label 'k8s-pod' 
-     }
-    }
+    agent any
 
     environment {
-        KUBECONFIG = credentials('kubeconfig')  
+        KUBECONFIG = credentials('kube')  // Use Jenkins credential ID
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                script {
-                   
-                    git branch: 'main', url: 'https://github.com/maheshgowdamg/kubernetes-project.git'
-                }
+                git branch: 'main', url: 'https://github.com/maheshgowdamg/kubernetes-project.git'
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    
-                    sh 'kubectl apply -f deploy.yml'
+                    kubernetesCli(
+                        kubeconfigId: 'kubeconfig-jenkins',
+                        script: '''
+                        kubectl apply -f deploy.yml
+                        kubectl get pods
+                        '''
+                    )
                 }
             }
         }
